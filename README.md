@@ -11,5 +11,5 @@ Completed:
   * [] π: calculates (well, conjures up) the value of π. For example, 3 π × should put three times the value of π into the display on your calculator. Ditto 3 ↲ π x and also π 3 ×.
 4. [] Add a UILabel to your UI which shows a history of every operand and operation input by the user. Place it at an appropriate location in your UI.
 5. [] Add a C button that clears everything (your display, the new UILabel you added above, etc.). The Calculator should be in the same state as it is at application startup after you touch this new button.
-6. [ ] Avoid the problems listed in the Evaluation section below. This list grows as the quarter progresses, so be sure to check it again with each assignment. 
+[ ] 6. Avoid the problems listed in the Evaluation section below. This list grows as the quarter progresses, so be sure to check it again with each assignment. 
 
