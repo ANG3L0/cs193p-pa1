@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var display: UILabel! //implicit unwrapped optional
     
     var userIsInTheMiddleOfTypingANumber = false
+    var operandStack = Array<Double>()
 
     @IBAction func appendDigit(sender: UIButton) {
         let digit = sender.currentTitle!
@@ -47,6 +48,12 @@ class ViewController: UIViewController {
         case "√": performOperation { sqrt($0) }
         case "sin": performOperation { sin($0) }
         case "cos": performOperation { cos($0) }
+        case "π":
+            if userIsInTheMiddleOfTypingANumber {
+                enter()
+            }
+            displayValue = M_PI
+            enter()
         default: break
         }
         
@@ -67,7 +74,7 @@ class ViewController: UIViewController {
     }
 
     
-    var operandStack = Array<Double>()
+    
     
     @IBAction func enter() {
         userIsInTheMiddleOfTypingANumber = false
@@ -77,10 +84,10 @@ class ViewController: UIViewController {
     
     var displayValue: Double {
         get {
-            return NSNumberFormatter().numberFromString(display.text!)!.doubleValue
+            return display.text! == "π" ? M_PI : NSNumberFormatter().numberFromString(display.text!)!.doubleValue
         }
         set {
-            display.text = "\(newValue)"
+            display.text = newValue == M_PI ? "π" : "\(newValue)"
             userIsInTheMiddleOfTypingANumber = false
         }
     }
