@@ -33,3 +33,7 @@ Here are the most common reasons assignments are marked down:
 * Your solution is difficult (or impossible) for someone reading the code to understand due to lack of comments, poor variable/method names, poor solution structure, long methods, etc.  
 
 Often students ask “how much commenting of my code do I need to do?” The answer is that your code must be easily and completely understandable by anyone reading it. You can assume that the reader knows the SDK, but should not assume that they already know the (or a) solution to the problem.
+
+#Demos and so forth
+Long video if me walking through all the boring features (plus, minus, subtract, sin, cosine, pie, square root, backspace, floating point entry, plus/minus)
+![Video Walkthrough](basic_rotate.gif)
