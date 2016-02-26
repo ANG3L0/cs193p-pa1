@@ -39,7 +39,7 @@ Long video if me walking through all the boring features (plus, minus, subtract,
 ![Video Walkthrough](basic_rotate.gif)
 
 The second walkthrough is on a different platform (iPad Air 2 instead of iPhone to show that auto-rotate works).  In addition I attempt to put more than one floating-point at a time, try to square-root a negative number (calculator does not support imaginary numbers). I also show more of auto-layout's feature by growing the history field by spamming a bunch of square-root and signs, which results in a dynamic shrinking of the buttons.
-![Video Walkthrough](cornercase.gif)
+![Video Walkthrough](cornercase_rotate.gif)
 
 ##What could be better?
   * My auto-layout is actually kind of screwed up (by one pixel), but I cannot figure out where the pixel differential is because there are too many space constraints, so I said "screw it, who cares about one pixel?"
