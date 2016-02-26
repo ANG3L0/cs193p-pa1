@@ -36,6 +36,20 @@ class ViewController: UIViewController {
         }
     }
 
+    @IBAction func valueManip(sender: UIButton) {
+        let manipulator = sender.currentTitle!
+        switch manipulator {
+        case "⌫":
+            display.text! = String(display.text!.characters.dropLast())
+            if display.text!.isEmpty {
+                display.text! = "0"
+                userIsInTheMiddleOfTypingANumber = false //erased to 0, don't want to have "03" in display
+            } else {
+                userIsInTheMiddleOfTypingANumber = true
+            }
+        default: break
+        }
+    }
     @IBAction func operate(sender: UIButton) {
         let operation = sender.currentTitle!
         if userIsInTheMiddleOfTypingANumber {
