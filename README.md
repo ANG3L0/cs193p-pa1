@@ -9,9 +9,9 @@
   * [x] sin: calculates the sine of the top operand on the stack
   * [x] cos: calculates the cosine of the top operand on the stack
   * [x] π: calculates (well, conjures up) the value of π. For example, 3 π × should put three times the value of π into the display on your calculator. Ditto 3 ↲ π x and also π 3 ×.
-4. [ ] Add a UILabel to your UI which shows a history of every operand and operation input by the user. Place it at an appropriate location in your UI.
-5. [ ] Add a C button that clears everything (your display, the new UILabel you added above, etc.). The Calculator should be in the same state as it is at application startup after you touch this new button.
-6. [ ] Avoid the problems listed in the Evaluation section below. This list grows as the quarter progresses, so be sure to check it again with each assignment. 
+4. [X] Add a UILabel to your UI which shows a history of every operand and operation input by the user. Place it at an appropriate location in your UI.
+5. [X] Add a C button that clears everything (your display, the new UILabel you added above, etc.). The Calculator should be in the same state as it is at application startup after you touch this new button.
+6. [X] Avoid the problems listed in the Evaluation section below. This list grows as the quarter progresses, so be sure to check it again with each assignment. 
 
 ## Extra Credit
 1. [ ] Implement a “backspace” button for the user to touch if they hit the wrong digit button. This is not intended to be “undo,” so if the user hits the wrong operation button, he or she is out of luck! It is up to you to decide how to handle the case where the user backspaces away the entire number they are in the middle of typing, but having the display go completely blank is probably not very user-friendly.
