@@ -47,6 +47,17 @@ class ViewController: UIViewController {
             } else {
                 userIsInTheMiddleOfTypingANumber = true
             }
+        case "ᐩ/-":
+            let startIdx = display.text!.startIndex
+            if (!display.text!.isEmpty) {
+                if (display.text![startIdx] != "-") {
+                    display.text!.insert("-", atIndex: startIdx)
+                } else {
+                    display.text!.removeAtIndex(startIdx)
+                }
+                
+            }
+            
         default: break
         }
     }
