@@ -15,8 +15,10 @@ class ViewController: UIViewController {
     
     var userIsInTheMiddleOfTypingANumber = false
     var operandStack = Array<Double>()
+    var freeze = false
 
     @IBAction func appendDigit(sender: UIButton) {
+        if freeze { return }
         let digit = sender.currentTitle!
         let dupDecimal = decimalDupCheck(digit, display.text)
         if userIsInTheMiddleOfTypingANumber {
@@ -37,6 +39,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func valueManip(sender: UIButton) {
+        if freeze { return }
         let manipulator = sender.currentTitle!
         switch manipulator {
         case "⌫":
@@ -63,6 +66,7 @@ class ViewController: UIViewController {
     }
     @IBAction func operate(sender: UIButton) {
         let operation = sender.currentTitle!
+        if freeze && operation != "C" { return }
         if userIsInTheMiddleOfTypingANumber {
             enter() //add to stack if say "6 enter 3 times"
         }
@@ -78,9 +82,8 @@ class ViewController: UIViewController {
             displayValue = M_PI
             enter()
         case "C":
-            userIsInTheMiddleOfTypingANumber = false
-            operandStack = []
-            opHistory.text! = ""
+            resetCalc()
+            freeze = false
             displayValue = 0
         default: break
         }
@@ -112,20 +115,37 @@ class ViewController: UIViewController {
     
     
     @IBAction func enter() {
+        if freeze { return }
         userIsInTheMiddleOfTypingANumber = false
-        operandStack.append(displayValue)
+        if let dispValid = displayValue {
+            operandStack.append(dispValid)
+        } else {
+            //N/A situation, clear everything out
+            operandStack = []
+        }
         print("operandStack = \(operandStack)")
     }
     
-    var displayValue: Double {
+    var displayValue: Double? {
         get {
             if display.text!.characters.last == "=" {
                 delDispLastChar()
             }
-            return display.text! == "π" ? M_PI : NSNumberFormatter().numberFromString(display.text!)!.doubleValue
+            if let strNumber = NSNumberFormatter().numberFromString(display.text!) {
+                return strNumber.doubleValue
+            } else {
+                //special case of PI and the spec to clear the display if N/A
+                if (display.text! != "π") {
+                    display.text = "N/A (please clear)"
+                    freeze = true
+                    resetCalc()
+                    return 0
+                }
+                return M_PI
+            }
         }
         set {
-            display.text = newValue == M_PI ? "π" : "\(newValue)"
+            display.text = newValue == M_PI ? "π" : "\(newValue!)"
             userIsInTheMiddleOfTypingANumber = false
         }
     }
@@ -133,9 +153,14 @@ class ViewController: UIViewController {
         display.text! = String(display.text!.characters.dropLast())
     }
     private func appendDispEquals() {
-        if (display.text!.characters.last != "=") {
+        if (display.text!.characters.last != "=" && display.text! != "N/A") {
             display.text! += "="
         }
+    }
+    private func resetCalc() {
+        userIsInTheMiddleOfTypingANumber = false
+        operandStack = []
+        opHistory.text! = ""
     }
 }
 
