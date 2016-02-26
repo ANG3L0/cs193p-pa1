@@ -40,7 +40,7 @@ class ViewController: UIViewController {
         let manipulator = sender.currentTitle!
         switch manipulator {
         case "⌫":
-            display.text! = String(display.text!.characters.dropLast())
+            delDispLastChar()
             if display.text!.isEmpty {
                 display.text! = "0"
                 userIsInTheMiddleOfTypingANumber = false //erased to 0, don't want to have "03" in display
@@ -84,6 +84,7 @@ class ViewController: UIViewController {
             displayValue = operation(op1, op2)
             opHistory.text! += opSymbol == "÷" ? "<\(op2) \(opSymbol) \(op1)> ": "<\(op1) \(opSymbol) \(op2)> "
             enter() //after last 2 operands done, want to work on next op, example: "6 ent 3 ent times 9 plus"
+            appendDispEquals()
         }
     }
     private func performOperation(opSymbol: String, operation: Double -> Double) {
@@ -92,6 +93,7 @@ class ViewController: UIViewController {
             displayValue = operation(op1)
             opHistory.text! += "<\(opSymbol)\(op1)> "
             enter() //after last 2 operands done, want to work on next op, example: "6 ent 3 ent times 9 plus"
+            appendDispEquals()
         }
     }
 
@@ -106,11 +108,22 @@ class ViewController: UIViewController {
     
     var displayValue: Double {
         get {
+            if display.text!.characters.last == "=" {
+                delDispLastChar()
+            }
             return display.text! == "π" ? M_PI : NSNumberFormatter().numberFromString(display.text!)!.doubleValue
         }
         set {
             display.text = newValue == M_PI ? "π" : "\(newValue)"
             userIsInTheMiddleOfTypingANumber = false
+        }
+    }
+    private func delDispLastChar() {
+        display.text! = String(display.text!.characters.dropLast())
+    }
+    private func appendDispEquals() {
+        if (display.text!.characters.last != "=") {
+            display.text! += "="
         }
     }
 }
