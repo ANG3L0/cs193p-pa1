@@ -68,7 +68,7 @@ class ViewController: UIViewController {
             let op1 = operandStack.removeLast()
             let op2 = operandStack.removeLast()
             displayValue = operation(op1, op2)
-            opHistory.text! += "<\(op1) \(opSymbol) \(op2)> "
+            opHistory.text! += opSymbol == "÷" ? "<\(op2) \(opSymbol) \(op1)> ": "<\(op1) \(opSymbol) \(op2)> "
             enter() //after last 2 operands done, want to work on next op, example: "6 ent 3 ent times 9 plus"
         }
     }
