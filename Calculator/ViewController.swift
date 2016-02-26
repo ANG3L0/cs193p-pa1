@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var display: UILabel! //implicit unwrapped optional
     @IBOutlet weak var opHistory: UILabel!
     
+    let errmsg = "N/A (please clear)"
     var userIsInTheMiddleOfTypingANumber = false
     var operandStack = Array<Double>()
     var freeze = false
@@ -136,7 +137,7 @@ class ViewController: UIViewController {
             } else {
                 //special case of PI and the spec to clear the display if N/A
                 if (display.text! != "π") {
-                    display.text = "N/A (please clear)"
+                    display.text = errmsg
                     freeze = true
                     resetCalc()
                     return 0
@@ -153,7 +154,7 @@ class ViewController: UIViewController {
         display.text! = String(display.text!.characters.dropLast())
     }
     private func appendDispEquals() {
-        if (display.text!.characters.last != "=" && display.text! != "N/A") {
+        if (display.text!.characters.last != "=" && display.text! != errmsg) {
             display.text! += "="
         }
     }
