@@ -44,4 +44,5 @@ The second walkthrough is on a different platform (iPad Air 2 instead of iPhone 
 ##What could be better?
   * My auto-layout is actually kind of screwed up (by one pixel), but I cannot figure out where the pixel differential is because there are too many space constraints, so I said "screw it, who cares about one pixel?"
   * Secondly, lower precision would be nice--a sin of PI is 0, but the calculator says it is 1.22e-16.  The "E-16" portion is actually covered up when you have a small screen and looking at it vertically--definitely something that could be improved upon.
+  * Lastly, even though displayValue can handle an "N/A" or some bad input (you just clear it and start over)--there's no clear spec as to whether or not the calculator ought to freeze when we run into a nan or some input that just does not work.  Though it is mentioned that this will ultimately be handled in the later assignments.
 
