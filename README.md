@@ -35,10 +35,10 @@ Here are the most common reasons assignments are marked down:
 Often students ask “how much commenting of my code do I need to do?” The answer is that your code must be easily and completely understandable by anyone reading it. You can assume that the reader knows the SDK, but should not assume that they already know the (or a) solution to the problem.
 
 #Demos and so forth
-Long video if me walking through all the boring features (plus, minus, subtract, sin, cosine, pie, square root, backspace, floating point entry, plus/minus, displaying history of operands/operations).
+Long video of me walking through all the boring features (plus, minus, subtract, sin, cosine, pie, square root, backspace, floating point entry, plus/minus, displaying history of operands/operations).  Also shows the case where the buttons dynamic changes sizes when operation history grows too big.
 ![Video Walkthrough](basic_rotate.gif)
 
-The second walkthrough is on a different platform (iPad Air 2 instead of iPhone to show that auto-layout works).  In addition I attempt to put more than one floating-point at a time, try to square-root a negative number (calculator does not support imaginary numbers). I also show more of auto-layout's feature by growing the history field by spamming a bunch of square-root and signs, which results in a dynamic shrinking of the buttons.
+The second walkthrough is on a different platform (iPad Air 2 instead of iPhone to show that auto-layout works).  In addition I attempt to put more than one floating-point at a time, try to square-root a negative number (calculator does not support imaginary numbers).  I also delete stuff up to the decimal "6." and the calculator would still interpret it as "6.0".
 ![Video Walkthrough](cornercase_rotate.gif)
 
 ##What could be better?

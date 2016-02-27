@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     
     let errmsg = "N/A (please clear)"
     var userIsInTheMiddleOfTypingANumber = false
-    var operandStack = Array<Double>()
+    var brain = CalculatorBrain()
     var freeze = false
 
     @IBAction func appendDigit(sender: UIButton) {
@@ -54,63 +54,44 @@ class ViewController: UIViewController {
         case "ᐩ/-":
             let startIdx = display.text!.startIndex
             if (!display.text!.isEmpty) {
-                if (display.text![startIdx] != "-") {
-                    display.text!.insert("-", atIndex: startIdx)
+                //cosmetic changes for nontyping, else actually do a *=-1
+                if userIsInTheMiddleOfTypingANumber {
+                    if (display.text![startIdx] != "-") {
+                        display.text!.insert("-", atIndex: startIdx)
+                    } else {
+                        display.text!.removeAtIndex(startIdx)
+                    }
                 } else {
-                    display.text!.removeAtIndex(startIdx)
+                    updateDispVal(manipulator)
+                    appendDispEquals()
+                    opHistory.text = brain.printOpHistory()
                 }
-                
             }
             
         default: break
         }
     }
+    
     @IBAction func operate(sender: UIButton) {
-        let operation = sender.currentTitle!
-        if freeze && operation != "C" { return }
+        
         if userIsInTheMiddleOfTypingANumber {
             enter() //add to stack if say "6 enter 3 times"
         }
-        switch operation {
-        case "×": performOperation("×") { $0 * $1 }
-        case "÷": performOperation("÷") { $1 / $0 }
-        case "+": performOperation("+") { $0 + $1 }
-        case "-": performOperation("-") { $0 - $1 }
-        case "√": performOperation("√") { sqrt($0) }
-        case "sin": performOperation("SIN ") { sin($0) }
-        case "cos": performOperation("COS ") { cos($0) }
-        case "π":
-            displayValue = M_PI
-            enter()
-        case "C":
-            resetCalc()
-            freeze = false
-            displayValue = 0
-        default: break
+        if let operation = sender.currentTitle {
+            if freeze && operation != "C" { return }
+            updateDispVal(operation)
+            if operation != "π" && operation != "C" {
+                appendDispEquals()
+            }
         }
+        opHistory.text = brain.printOpHistory()
+//        case "C":
+//            resetCalc()
+//            freeze = false
+//            displayValue = 0
+        //        }
         
 
-    }
-    
-    private func performOperation(opSymbol: String, operation: (Double, Double) -> Double) {
-        if operandStack.count >= 2 {
-            let op1 = operandStack.removeLast()
-            let op2 = operandStack.removeLast()
-            displayValue = operation(op1, op2)
-            opHistory.text! += opSymbol == "÷" ? "<\(op2) \(opSymbol) \(op1)> ": "<\(op1) \(opSymbol) \(op2)> "
-            enter() //after last 2 operands done, want to work on next op, example: "6 ent 3 ent times 9 plus"
-            appendDispEquals()
-        }
-    }
-    private func performOperation(opSymbol: String, operation: Double -> Double) {
-        if operandStack.count >= 1 {
-            let op1 = operandStack.removeLast()
-            displayValue = operation(op1)
-            opHistory.text! += "<\(opSymbol)\(op1)> "
-            print("\(sin(M_PI))")
-            enter() //after last 2 operands done, want to work on next op, example: "6 ent 3 ent times 9 plus"
-            appendDispEquals()
-        }
     }
 
     
@@ -119,13 +100,11 @@ class ViewController: UIViewController {
     @IBAction func enter() {
         if freeze { return }
         userIsInTheMiddleOfTypingANumber = false
-        if let dispValid = displayValue {
-            operandStack.append(dispValid)
+        if let result = brain.pushOperand(displayValue) {
+            displayValue = result
         } else {
-            //N/A situation, clear everything out
-            operandStack = []
+            displayValue = nil
         }
-        print("operandStack = \(operandStack)")
     }
     
     var displayValue: Double? {
@@ -147,7 +126,12 @@ class ViewController: UIViewController {
             }
         }
         set {
-            display.text = newValue == M_PI ? "π" : "\(newValue!)"
+            if let num = newValue {
+                display.text = num == M_PI ? "π" : "\(num)"
+            } else {
+                display.text = "N/A"
+            }
+            
             userIsInTheMiddleOfTypingANumber = false
         }
     }
@@ -161,8 +145,14 @@ class ViewController: UIViewController {
     }
     private func resetCalc() {
         userIsInTheMiddleOfTypingANumber = false
-        operandStack = []
         opHistory.text! = ""
+    }
+    private func updateDispVal(operation: String) {
+        if let result = brain.performOperation(operation) {
+            displayValue = result
+        } else {
+            displayValue = nil
+        }
     }
 }
 
