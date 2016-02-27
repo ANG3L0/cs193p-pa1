@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     @IBAction func appendDigit(sender: UIButton) {
         if freeze { return }
         let digit = sender.currentTitle!
-        let dupDecimal = decimalDupCheck(digit, display.text)
+        let dupDecimal = decimalDupCheck(inputDigit: digit, stringToCheck: display.text)
         if userIsInTheMiddleOfTypingANumber {
             if !dupDecimal {
                 display.text = display.text! + digit
@@ -31,7 +31,7 @@ class ViewController: UIViewController {
             userIsInTheMiddleOfTypingANumber = true
         }
     }
-    func decimalDupCheck(digit: String, _ text: String?) -> Bool {
+    func decimalDupCheck(inputDigit digit: String, stringToCheck text: String?) -> Bool {
         if userIsInTheMiddleOfTypingANumber {
             return digit == "." && text?.containsString(".") == true
         } else {
